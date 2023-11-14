@@ -143,7 +143,7 @@ def experimental_loop(n_trials, sound_shape_mapping, theta, learning_rate = 0.05
     associations_list : list
         List of pandas dataframes with the associations between shapes and sounds at each trial
     """
-    
+    stimuli = np.zeros((n_trials))
     response = np.zeros((n_trials))
     hit = np.zeros((n_trials))
 
@@ -157,6 +157,7 @@ def experimental_loop(n_trials, sound_shape_mapping, theta, learning_rate = 0.05
     # loop over trials
     for trial in range(n_trials):
         sound = play_sound()
+        stimuli[trial] = sound
 
         shape = choose_a_shape(associations, sound, theta = theta)
 
@@ -175,15 +176,15 @@ def experimental_loop(n_trials, sound_shape_mapping, theta, learning_rate = 0.05
         response[trial] = shape
         hit[trial] = int(feedback)
     
-    return associations_list, response, hit
+    return associations_list, stimuli, response, hit
 
 if __name__ in "__main__":
     sound_shape_mapping = {
-        0: 2,
-        1: 3,
-        2: 4,
-        3: 0,
-        4: 1
+        0: 0,
+        1: 1,
+        2: 2,
+        3: 3,
+        4: 4
     }
 
     associations_list, response, hit = experimental_loop(

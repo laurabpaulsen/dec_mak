@@ -1,3 +1,4 @@
 pystan
 numpy
 pandas
+matplotlib
