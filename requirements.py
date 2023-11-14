@@ -1,0 +1,3 @@
+pystan
+numpy
+pandas
