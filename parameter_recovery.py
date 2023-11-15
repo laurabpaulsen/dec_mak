@@ -28,7 +28,9 @@ if __name__ in "__main__":
         "n_trials": len(response),
         "stim": [int(stim) + 1 for stim in stimuli], 
         "resp": [int(resp) + 1 for resp in response],
-        "hit": hit
+        "hit": hit,
+        "sounds": list(range(1,6)),
+        "shapes": list(range(1,6)),
     }
 
     with open(path / "model_single_subject.stan") as f:
