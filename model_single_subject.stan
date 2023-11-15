@@ -22,12 +22,28 @@ transformed parameters {
   for (t in 2:n_trials) { // loop over trials
     
     if (hit[t-1] == 1) // if correct on t-1
-      ass[stim[t-1], resp[t-1]] = ass[stim[t-1], resp[t-1]] + lr; // NOTE: maybe ass should be 3d and then we would do t-1 here // update association strength of the stimuli and response pair
+      ass[stim[t-1], resp[t-1]] += lr; // NOTE: maybe ass should be 3d and then we would do t-1 here // update association strength of the stimuli and response pair
     else // if incorrect if incorrect on t-1
-      ass[stim[t-1], resp[t-1]] = ass[stim[t-1], resp[t-1]] -lr; // update association strength of the stimuli and response pair
+      ass[stim[t-1], resp[t-1]] -= lr; // update association strength of the stimuli and response pair
 
-    // IMPLEMENT UPDATING OF UNCHOSEN PARAMETERS
+    // update associations for the sound chosen and remaining shapes not chosen
+    for (shape in shapes){
+      if (resp[t-1] != shapes) \\ 
+        if (hit[t-1] == 1)
+          ass[stim[t-1], shape] -= lr_r;
+        else
+          ass[stim[t-1], shape] += lr_r;
 
+    }
+    // update the associations for sounds not played for the shape chosen
+    for (sound in sounds){
+      if (stim[t-1] != sound) \\ 
+        if (hit[t-1] == 1)
+          ass[sound, resp[t-1]] -= lr_r;
+        else
+          ass[sound, resp[t-1]] += lr_r;
+
+    }
     
     p[,t] = softmax(theta * to_vector(ass[stim[t]]));
 
