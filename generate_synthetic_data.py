@@ -120,7 +120,7 @@ def choose_a_shape(associations:pd.DataFrame, sound_played:int, theta = 1):
 
     return shape_chosen
 
-def experimental_loop(n_trials, sound_shape_mapping, theta, learning_rate = 0.05, reversal_learning_rate = 0.05, n_shapes = 5, n_sounds = 5):
+def experimental_loop(n_trials, sound_shape_mapping = {0: 0, 1: 1, 2: 2, 3: 3, 4: 4}, theta = 2, learning_rate = 0.05, reversal_learning_rate = 0.05, n_shapes = 5, n_sounds = 5):
     """
 
     Parameters
