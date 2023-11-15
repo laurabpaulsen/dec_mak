@@ -61,23 +61,29 @@ def test_parameter_recovery(n_subjects, model_spec, savepath = None):
     
     # plot true vs estimated parameters
     fig, ax = plt.subplots(1, 3, figsize = (15, 5))
-    ax[0].scatter(true_theta, estimated_theta)
-    ax[0].set_xlabel("True theta")
-    ax[0].set_ylabel("Estimated theta")
-
-    ax[1].scatter(true_learning_rate, estimated_learning_rate)
-    ax[1].set_xlabel("True learning rate")
-    ax[1].set_ylabel("Estimated learning rate")
-
-    ax[2].scatter(true_reversal_learning_rate, estimated_reversal_learning_rate)
-    ax[2].set_xlabel("True reversal learning rate")
-    ax[2].set_ylabel("Estimated reversal learning rate")
+    
+    for true, estimated, parameter_name, axis in zip(
+        [true_theta, true_learning_rate, true_reversal_learning_rate],
+        [estimated_theta, estimated_learning_rate, estimated_reversal_learning_rate],
+        ["theta", "lr", "lr_r"],
+        ax
+    ):
+        plot_recovery_ax(axis, true, estimated, parameter_name)
 
     plt.tight_layout()
     
     if savepath:
         plt.savefig("parameter_recovery.png")
 
+
+def plot_recovery_ax(ax, true, estimated, parameter_name):
+    ax.scatter(true, estimated)
+    # plot a diagonal line
+    xmin, xmax = ax.get_xlim()
+    ymin, ymax = ax.get_ylim()
+    ax.plot([xmin, xmax], [ymin, ymax], color = "black", linestyle = "dashed")
+    ax.set_xlabel("True")
+    ax.set_ylabel("Estimated")
 
 
 
