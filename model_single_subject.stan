@@ -1,13 +1,10 @@
 data {
   int<lower=0> n_trials;
-  int<lower=1, upper=5> resp[n_trials]; // responses
+  array[n_trials] int<lower=1, upper=5> resp; // responses
+  array[n_trials] int<lower=1, upper=5> stim; // the sounds presented
   vector[n_trials] hit; // whether the answer was correct or not
-  int<lower=1, upper=5> stim[n_trials]; // the sounds presented
-
-  int<lower=1, upper=5> sounds[5];
-  int<lower=1, upper=5> shapes[5];
-
-
+  array[5] int<lower=1, upper=5> sounds; // identifier for each sound
+  array[5] int<lower=1, upper=5> shapes; // identifier for each shape
 }
 
 parameters {
@@ -25,7 +22,7 @@ transformed parameters {
   for (t in 2:n_trials) { // loop over trials
     
     if (hit[t-1] == 1) // if correct on t-1
-      ass[stim[t-1], resp[t-1]] += lr; // NOTE: maybe ass should be 3d and then we would do t-1 here // update association strength of the stimuli and response pair
+      ass[stim[t-1], resp[t-1]] += lr; // update association strength of the stimuli and response pair
     else // if incorrect if incorrect on t-1
       ass[stim[t-1], resp[t-1]] -= lr; // update association strength of the stimuli and response pair
 
@@ -54,9 +51,11 @@ transformed parameters {
 
 }
 model {
-  theta ~ normal(1, 10);
-  lr ~ normal(1, 10);
-  lr_r ~ normal(1,10);
+  // Figure out more appropriate priors
+  // Currently truncating everything at 0
+  theta ~ normal(1, 10) T[0, ];
+  lr ~ normal(1, 10) T[0, ];
+  lr_r ~ normal(1,10) T[0, ];
 
 
   for (t in 2:n_trials) {

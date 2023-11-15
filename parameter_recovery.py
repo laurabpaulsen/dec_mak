@@ -65,7 +65,7 @@ def test_parameter_recovery(n_subjects, model_spec, savepath = None):
     for true, estimated, parameter_name, axis in zip(
         [true_theta, true_learning_rate, true_reversal_learning_rate],
         [estimated_theta, estimated_learning_rate, estimated_reversal_learning_rate],
-        ["theta", "lr", "lr_r"],
+        ["theta", "learning rate", "reversal learning rate"],
         ax
     ):
         plot_recovery_ax(axis, true, estimated, parameter_name)
@@ -78,15 +78,10 @@ def test_parameter_recovery(n_subjects, model_spec, savepath = None):
 
 def plot_recovery_ax(ax, true, estimated, parameter_name):
     ax.scatter(true, estimated)
-    # plot a diagonal line
-    xmin, xmax = ax.get_xlim()
-    ymin, ymax = ax.get_ylim()
-    ax.plot([xmin, xmax], [ymin, ymax], color = "black", linestyle = "dashed")
+    ax.plot([0, 1], [0, 1], color = "black", linestyle = "dashed")
     ax.set_xlabel("True")
     ax.set_ylabel("Estimated")
-
-
-
+    ax.set_title(parameter_name.title())
     
 
 if __name__ in "__main__":
@@ -95,7 +90,7 @@ if __name__ in "__main__":
     with open(path / "model_single_subject.stan") as f:
         model_spec = f.read()
     
-    n_subjects = 10
+    n_subjects = 50
 
     test_parameter_recovery(n_subjects, model_spec, savepath = path / "parameter_recovery.png")
 
