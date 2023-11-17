@@ -8,9 +8,9 @@ data {
 }
 
 parameters {
-  real theta; // determinism in softmax function 
-  real lr; // learning rate
-  real lr_r; //reversal learning_rate
+  real <lower=0> theta; // determinism in softmax function 
+  real <lower=0, upper=1> lr; // learning rate
+  real <lower=0, upper=1> lr_r; //reversal learning_rate
 }
 
 transformed parameters {
@@ -53,10 +53,16 @@ transformed parameters {
 model {
   // Figure out more appropriate priors
   // Currently truncating everything at 0
-  theta ~ normal(1, 10) T[0, ];
-  lr ~ normal(1, 10) T[0, ];
-  lr_r ~ normal(1,10) T[0, ];
+  // theta ~ normal(1, 10) T[0, ];
+  // lr ~ normal(1, 10) T[0, ];
+  // lr_r ~ normal(1,10) T[0, ];
+  //theta ~ uniform(0, 5);
+  lr ~ uniform(0, 0.3);
+  //lr_r ~ uniform(0, 0.3);
 
+  theta ~ lognormal(0, 5);
+  //lr ~ lognormal(0, 1);
+  lr_r ~ lognormal(0, 1);
 
   for (t in 2:n_trials) {
     resp[t] ~ categorical(p[,t]);

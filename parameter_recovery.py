@@ -21,10 +21,10 @@ def test_parameter_recovery(n_subjects, model_spec, savepath = None):
 
     for subject in range(n_subjects):
 
-        # choose random parameters
+        # choose random parameters UPDATE THIS
         theta = np.random.uniform(0, 5)
-        learning_rate = np.random.uniform(0, 1)
-        reversal_learning_rate = np.random.uniform(0, 1)
+        learning_rate = np.random.uniform(0, 0.3)
+        reversal_learning_rate = np.random.uniform(0, 0.3)
 
         # generate synthetic data
         _, stimuli, response, hit = experimental_loop(
@@ -78,7 +78,8 @@ def test_parameter_recovery(n_subjects, model_spec, savepath = None):
 
 def plot_recovery_ax(ax, true, estimated, parameter_name):
     ax.scatter(true, estimated)
-    ax.plot([0, 1], [0, 1], color = "black", linestyle = "dashed")
+    x_lims = ax.get_xlim()
+    ax.plot([0, x_lims[1]], [0, x_lims[1]], color = "black", linestyle = "dashed")
     ax.set_xlabel("True")
     ax.set_ylabel("Estimated")
     ax.set_title(parameter_name.title())
@@ -90,7 +91,7 @@ if __name__ in "__main__":
     with open(path / "model_single_subject.stan") as f:
         model_spec = f.read()
     
-    n_subjects = 50
+    n_subjects = 10
 
     test_parameter_recovery(n_subjects, model_spec, savepath = path / "parameter_recovery.png")
 
