@@ -83,9 +83,9 @@ def plot_recovery_ax(ax, true, estimated, parameter_name):
     ax.set_xlabel("True")
     ax.set_ylabel("Estimated")
     ax.set_title(parameter_name.title())
-    
 
-if __name__ in "__main__":
+
+def main():
     path = Path(__file__).parent
 
     outpath = path / "fig"
@@ -100,6 +100,6 @@ if __name__ in "__main__":
 
     test_parameter_recovery(n_subjects, model_spec, savepath = outpath / "parameter_recovery.png")
 
-    
 
-    
+if __name__ in "__main__":
+    main()
