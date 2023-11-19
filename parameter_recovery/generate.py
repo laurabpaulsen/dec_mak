@@ -1,4 +1,5 @@
 """
+This script holds the functions to generate the data for the parameter recovery. Additionally, when running this script as main, it will generate the data and figures of the associations and choices over trials.
 """
 
 import pandas as pd
@@ -189,27 +190,12 @@ def main():
     if not fig_path.exists():
         fig_path.mkdir()
 
-
-    sound_shape_mapping = {
-        0: 0,
-        1: 1,
-        2: 2,
-        3: 3,
-        4: 4
-    }
-
     associations_list, response, hit = experimental_loop(
-        n_trials=100, 
-        sound_shape_mapping = sound_shape_mapping,
+        n_trials=100,
         theta = 2,
         learning_rate = 0.05, # learning rate for chosen nodes
         reversal_learning_rate = 0.01 # learning rate for non-chosen nodes
         )
-    
-    # save dataframe with response and hit
-    df = pd.DataFrame({"response": response, "hit": hit})
-    df.to_csv("data.tsv", sep = "\t", index = False)
-
 
     # plot how the associations change over time for each sound
     fig, axes = plt.subplots(1, 5, figsize = (20, 5), sharey=True)
