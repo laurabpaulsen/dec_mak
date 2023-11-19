@@ -1,5 +1,5 @@
 import stan
-from generate_synthetic_data import experimental_loop
+from generate import experimental_loop
 from pathlib import Path
 import matplotlib.pyplot as plt
 import numpy as np
@@ -73,7 +73,7 @@ def test_parameter_recovery(n_subjects, model_spec, savepath = None):
     plt.tight_layout()
     
     if savepath:
-        plt.savefig("parameter_recovery.png")
+        plt.savefig(savepath / "subject_parameter_recovery.png")
 
 
 def plot_recovery_ax(ax, true, estimated, parameter_name):
@@ -88,12 +88,17 @@ def plot_recovery_ax(ax, true, estimated, parameter_name):
 if __name__ in "__main__":
     path = Path(__file__).parent
 
-    with open(path / "model_single_subject.stan") as f:
+    outpath = path / "fig"
+
+    if not outpath.exists():
+        outpath.mkdir()
+
+    with open(path.parent / "single_subject.stan") as f:
         model_spec = f.read()
     
     n_subjects = 10
 
-    test_parameter_recovery(n_subjects, model_spec, savepath = path / "parameter_recovery.png")
+    test_parameter_recovery(n_subjects, model_spec, savepath = outpath / "parameter_recovery.png")
 
     
 

@@ -5,6 +5,7 @@ import pandas as pd
 import numpy as np
 import random
 import matplotlib.pyplot as plt
+from pathlib import Path
 
 def softmax(x, theta = 1):
     """
@@ -178,7 +179,17 @@ def experimental_loop(n_trials, sound_shape_mapping = {0: 0, 1: 1, 2: 2, 3: 3, 4
     
     return associations_list, stimuli, response, hit
 
-if __name__ in "__main__":
+
+def main():
+    path = Path(__file__).parent
+
+    fig_path = path / "fig"
+
+    # ensure that the fig folder exists
+    if not fig_path.exists():
+        fig_path.mkdir()
+
+
     sound_shape_mapping = {
         0: 0,
         1: 1,
@@ -213,7 +224,7 @@ if __name__ in "__main__":
         ax.set_ylabel("Association")
 
 
-    plt.savefig("associations.png")
+    plt.savefig(fig_path / "associations.png")
 
     # plot the choices made over time and correct/incorrect feedback
     fig, ax = plt.subplots(1, 1, figsize = (20, 5))
@@ -224,11 +235,7 @@ if __name__ in "__main__":
 
     ax.set_xlabel("Trial")
     
-    plt.savefig("choices.png")
+    plt.savefig(fig_path / "choices.png")
 
-
-
-
-
-
-
+if __name__ in "__main__":    
+    main()
