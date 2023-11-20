@@ -56,13 +56,10 @@ model {
   // theta ~ normal(1, 10) T[0, ];
   // lr ~ normal(1, 10) T[0, ];
   // lr_r ~ normal(1,10) T[0, ];
-  //theta ~ uniform(0, 5);
-  lr ~ uniform(0, 0.3);
-  //lr_r ~ uniform(0, 0.3);
 
-  theta ~ lognormal(0, 5);
-  //lr ~ lognormal(0, 1);
-  lr_r ~ lognormal(0, 1);
+  theta ~ normal(1, 10) T[0, ];
+  lr ~ normal(.5, .5);
+  lr_r ~ normal(.5, .5);
 
   for (t in 2:n_trials) {
     resp[t] ~ categorical(p[,t]);
