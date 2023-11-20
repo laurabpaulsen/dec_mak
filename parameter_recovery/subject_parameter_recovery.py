@@ -78,9 +78,11 @@ def test_parameter_recovery(n_subjects, model_spec, savepath = None):
     for subject in range(n_subjects):
 
         # choose random parameters UPDATE THIS
-        theta = np.random.uniform(0, 5)
-        lr = np.random.uniform(0, 0.3)
-        rlr = np.random.uniform(0, 0.3)
+        theta = np.random.poisson(5)
+
+        # lr and rlr should be between 0 and 1 with more values closer to 0
+        lr = np.random.beta(1, 5)
+        rlr = np.random.beta(1, 5)
 
         # generate synthetic data
         _, stimuli, response, hit = experimental_loop(
