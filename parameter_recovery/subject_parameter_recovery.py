@@ -81,8 +81,8 @@ def test_parameter_recovery(n_subjects, model_spec, savepath = None):
         theta = np.random.poisson(5)
 
         # lr and rlr should be between 0 and 1 with more values closer to 0
-        lr = np.random.beta(1, 5)
-        rlr = np.random.beta(1, 5)
+        lr = np.random.beta(2, 30)
+        rlr = np.random.beta(2, 30)
 
         # generate synthetic data
         _, stimuli, response, hit = experimental_loop(
@@ -137,7 +137,7 @@ def main():
     with open(path.parent / "single_subject.stan") as f:
         model_spec = f.read()
     
-    n_subjects = 10
+    n_subjects = 50
 
     test_parameter_recovery(n_subjects, model_spec, savepath = outpath)
 

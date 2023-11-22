@@ -12,4 +12,6 @@ source "$scriptDir/env/bin/activate"
 # Install requirements from the same directory as the script
 python -m pip install -r "$scriptDir/requirements.txt"
 
+python -m pip install pystan
+
 echo "Done!"
