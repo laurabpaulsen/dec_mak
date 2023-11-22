@@ -78,12 +78,12 @@ def test_parameter_recovery(n_subjects, model_spec, savepath = None):
     for subject in range(n_subjects):
 
         # choose random parameters UPDATE THIS
-        theta = np.random.poisson(5)
+        theta = np.random.poisson(10)
 
         # lr and rlr should be between 0 and 1 with more values closer to 0
-        lr = np.random.beta(2, 30)
-        lr_r_sound = np.random.beta(2, 30)
-        lr_r_shape = np.random.beta(2, 30)
+        lr = np.random.beta(3, 40)
+        lr_r_sound = np.random.beta(2, 40)
+        lr_r_shape = np.random.beta(2, 40)
 
         # generate synthetic data
         _, stimuli, response, hit = experimental_loop(
@@ -141,7 +141,7 @@ def main():
     with open(path.parent / "single_subject_multi_lr.stan") as f:
         model_spec = f.read()
     
-    n_subjects = 10
+    n_subjects = 50
 
     test_parameter_recovery(n_subjects, model_spec, savepath = outpath / "subject_parameter_recovery_sound_shape_lr.png")
 

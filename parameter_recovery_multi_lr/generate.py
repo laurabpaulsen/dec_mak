@@ -88,25 +88,25 @@ def update_associations(
 
     # update the chosen shape-sound association
     if feedback: # if correct, increase the association
-        associations.loc[sound_played, shape_chosen] += lr
+        associations.loc[sound_played, shape_chosen] *= (1+lr)
     else: # if incorrect, decrease the association
-        associations.loc[sound_played, shape_chosen] -= lr
+        associations.loc[sound_played, shape_chosen] *= (1-lr)
     
     # update the associations for shapes not chosen for the sound played
     for i in range(n_shapes): 
         if i != shape_chosen:
             if feedback:
-                associations.loc[sound_played, i] -= lr_r_sound
+                associations.loc[sound_played, i] *= (1-lr_r_sound)
             else:
-                associations.loc[sound_played, i] += lr_r_sound
+                associations.loc[sound_played, i] *= (1+lr_r_sound)
 
     # update the associations for sounds not played for the shape chosen
     for i in range(n_sounds):
         if i != sound_played:
             if feedback:
-                associations.loc[i, shape_chosen] -= lr_r__shape
+                associations.loc[i, shape_chosen] *= (1-lr_r__shape)
             else:
-                associations.loc[i, shape_chosen] +=  lr_r__shape
+                associations.loc[i, shape_chosen] *= (1+lr_r__shape)
 
 def play_sound(n_sounds = 5):
     """
