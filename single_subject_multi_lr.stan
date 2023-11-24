@@ -58,7 +58,7 @@ model {
   // lr ~ normal(1, 10) T[0, ];
   // lr_r ~ normal(1,10) T[0, ];
 
-  theta ~ normal(1, 10) T[0, ];
+  theta ~ normal(0, 10);
   lr ~ normal(.5, .5)T[0, ];
   lr_r_sound ~ normal(.5, .5)T[0, ];
   lr_r_shape ~ normal(.5, .5)T[0, ];
