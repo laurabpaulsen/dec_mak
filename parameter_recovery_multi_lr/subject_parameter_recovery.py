@@ -12,6 +12,18 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
+def MPD(x: pd.Series):
+    """
+    Modified from Andreas' R code.
+    
+    # defining a function for calculating the maximum of the posterior density (not exactly the same as the mode)
+    MPD <- function(x) {
+    density(x)$x[which(density(x)$y==max(density(x)$y))]
+    }
+    """
+    density = x.plot.density()
+    return density.x[np.argmax(density.y)]
+
 def plot_recovery_ax(ax, true, estimated, parameter_name):
     """
     Helper function for plot_recoveries
@@ -116,10 +128,10 @@ def test_parameter_recovery(n_subjects, model_spec, savepath = None):
         t_lr_r_sound[subject] = lr_r_sound
         t_lr_r_shape[subject] = lr_r_shape
 
-        e_theta[subject] = df['theta'].median()
-        e_lr[subject] = df['lr'].median()
-        e_lr_r_sound[subject] = df['lr_r_sound'].median()
-        e_lr_r_shape[subject] = df['lr_r_shape'].median()
+        e_theta[subject] = MPD(df['theta'])
+        e_lr[subject] = MPD(df['lr'])
+        e_lr_r_sound[subject] = MPD(df['lr_r_sound'])
+        e_lr_r_shape[subject] = MPD(df['lr_r_shape'])
     
     # plot true vs estimated parameters
     plot_recoveries(
